@@ -1,0 +1,57 @@
+Question-1:
+select member_id,member_name,city,membership_status from lms_members where membership_status="Permananent";
+
+Question-2:
+select l.book_code,l.publication,l.price,s.supplier_name from lms_members l join lsm_suppliers_details s 
+
+
+Question-3:
+select m.member_id,m.member_name from lms_members m join lms_book_issue l where l.book_code="BL00000002" 
+
+Question-4:
+select book_code,book_title,author from lms_book_details where author like "P%"
+
+Question-5:
+select count(book_title) as "NO_OF_BOOKS" from lms_book_details where book_title="Java";
+
+Question-6:
+select category,count(book_title) as "NO_OF_BOOKS" from lms_book_details group by category
+
+Question-7:
+select count(*) as "NO_OF_BOOKS" from lms_book_details where publication="Prentice hall"
+
+Question-8:
+select d.book_code,d.book_title from lms_book_details d join lms_book_issue m on d.book_code=m.book_code where m.date_issue in ("2012-04-01")
+
+Question-9:
+select member_id,member_name,date_registration,date_expire from lms_members where date_expire<"2013-04-01"
+
+
+Question-10:
+select member_id,member_name,date_register,membership_status from lms_members where date_register<"2012-03-01" and membership_status="Temporary"
+
+
+Question-11:
+select member_id,concat((substr(member_name),1,1),substr(member_name,2)) as name from lms_members where city in ("CHENNAI","DELHI")
+
+
+Question-12:
+select distinct concat(book_title,"_is_written_by_",author) as BOOK_WRITTEN_BY from lms_book_details
+
+Question-13:
+select avg(price) as AVERAGE_PRICE from lms_book_details where category="JAVA";
+
+
+Question-14:
+select supplier_id,supplier_name,email from lms_supplier_details where email like "%@gmail.com";
+
+
+Question-15:
+select supplier_id,supplier_name,coalesce((cast(contact) as char),email,address) as CONTACTDETAILS from lms_supplier_details
+
+
+Question-16:
+select supplier_id,supplier_name,isnull(contact,"NO","YES") as PHONENUMAVAILABLE from lms_supplier_details
+
+Question-17:
+select m.member_id,m.member_name,m.city,m.membership_status from lms_members m join (lms_book_issue bi join lms_fine_details on fd where bi.fine_range=fd.fine_range) jd on m.member_id=jd.member_id
