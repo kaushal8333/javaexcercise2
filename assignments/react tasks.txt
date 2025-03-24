@@ -216,4 +216,151 @@ export default function Task5() {
   );
 }
 
+Task-3.1:
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
+
+const Tab=(Compo,title)=>{
+    return(props)=>(
+        <div className="container mt-4">
+      <h2 className="mb-3">{title}</h2>
+      <div className="table-responsive">
+        <table className="table table-bordered table-striped">
+          <Compo {...props} />
+        </table>
+      </div>
+    </div>
+    )
+}
+
+const ProductList = ({ data }) => (
+  <>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Product Name</th>
+        <th>Price</th>
+      </tr>
+        </thead>
+      <tbody>
+        {data.map((product) => (
+          <tr key={product.id}>
+            <td>{product.id}</td>
+            <td>{product.name}</td>
+            <td>${product.price}</td>
+          </tr>
+        ))}
+      </tbody>
+  </>
+  );
+  
+  // Employee List Component
+  const EmployeeList = ({ data }) => (
+    <>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Position</th>
+      </tr>
+        </thead>
+      <tbody>
+        {data.map((employee) => (
+          <tr key={employee.id}>
+            <td>{employee.id}</td>
+            <td>{employee.name}</td>
+            <td>{employee.position}</td>
+          </tr>
+        ))}
+      </tbody>
+    </>
+  );
+const productData = [
+    { id: 1, name: "Laptop", price: 1200 },
+    { id: 2, name: "Phone", price: 800 },
+  ];
+  
+  const employeeData = [
+    { id: 1, name: "Alice", position: "Developer" },
+    { id: 2, name: "Bob", position: "Designer" },
+  ];
+
+
+const HocLoggingProduct=Tab(ProductList,"product list")
+const HocLoggingEmployee=Tab(EmployeeList,"employee list")
+const Hoc=()=>{
+    return(
+        <div>
+            <HocLoggingProduct data={productData} />
+            <HocLoggingEmployee data={employeeData} />
+        </div>
+    )
+}
+
+
+export default Hoc;
+
+
+Task-3.2:
+
+
+import React, { useEffect, useState } from 'react'
+
+function Fetch() {
+    const [products,setProducts]=useState([]);
+    const [loading,setLoading]=useState(true);
+    const [error,setError]=useState('');
+    useEffect(()=>{
+        fetch("https://fakestoreapi.com/products")
+        .then((response)=>{
+            if(!response.ok){
+                throw new Error("network response error");
+            }
+            return response.json();
+        }) 
+        .then((data)=>{
+            const ex=data.slice(0,10);
+            setProducts(ex);
+            setLoading(false);
+        })
+        .catch((e)=>{
+            setError(e);
+            setLoading(false);
+        })
+    },[]);
+    if (loading) {
+        return(
+            <p>Loading....</p>
+        )
+    }
+    if (error) {
+        <p>Error in loading</p>
+    }
+  return (
+          <>
+          <table className="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Product Name</th>
+        <th>Price</th>
+      </tr>
+        </thead>
+      <tbody>
+        {products.map((product) => (
+            <tr key={product.id}>
+            <td>{product.id}</td>
+            <td>{product.title}</td>
+            <td>${product.price}</td>
+          </tr>
+        ))}
+      </tbody>
+              </table>
+  </>
+       
+  )
+}
+
+export default Fetch
